@@ -40,29 +40,28 @@ class Mood
 	end
 end
 
-def Prompt
+diary = Diary.new
+
+if ARGV.count == 0
 	puts diary.GetMoodScale 
 	puts "What's your mood right now?"
 	currentMood = gets.chomp.to_i
 
 	puts "Why?"
 	currentMoodReason = gets.chomp
-end
-
-diary = Diary.new
-
-if ARGV.count == 0
-	Prompt
 elsif ARGV.count == 1
+
 	# look into an Options parser lib
-	if ARGV[0] == "/reset"
+	if ARGV[0] == "--reset"
 		puts "Are you sure you want to clear the diary? (y/N)"
-		answer = gets.chomp
+		answer = STDIN.gets.chomp
 
 		if(answer == "" || answer == 'N' || answer == 'n')
 			puts "Ok, NOT clearing the diary this time."
+			exit(0)	
 		else
 			diary.Clear
+			puts "Diary has been cleared."
 			exit(0)
 		end
 	end
