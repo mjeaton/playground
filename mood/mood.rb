@@ -1,4 +1,3 @@
-require 'date'
 class Diary
 	attr_accessor :Entries
 
@@ -83,6 +82,10 @@ end
 
 diary = Diary.new
 
+# No args = prompt
+# --reset = clears the file
+# --list = lists all the entries in the file
+
 if ARGV.count == 0
 	diary.SaveEntry(prompt(diary))
 	puts "Saved."
@@ -91,8 +94,10 @@ elsif ARGV.count == 1
 	if ARGV[0] == "--list"
 		diary.Entries.each { |e| puts e.to_s}
 
-		puts "-" * 10
-		puts "Entries: #{diary.Entries.count}"
+		if diary.Entries.count > 0
+			puts "-" * 10
+			puts "Entries: #{diary.Entries.count}"
+		end
 	elsif ARGV[0] == "--reset"
 		puts "Are you sure you want to clear the diary? (y/N)"
 		answer = STDIN.gets.chomp
