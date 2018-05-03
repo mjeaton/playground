@@ -65,7 +65,7 @@ elsif ARGV.count == 1
 		puts "Are you sure you want to clear the diary? (y/N)"
 		answer = STDIN.gets.chomp
 
-		if(["y", "Y"].include? answer)
+		if(answer.downcase == "y")
 			diary.Clear
 			puts "Diary has been cleared."
 		else
