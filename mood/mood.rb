@@ -60,10 +60,7 @@ if ARGV.count == 0
 	diary.SaveEntry(prompt(diary))
 	puts "Saved."
 elsif ARGV.count == 1
-	# some of this feels dirty and not very Ruby-like
-	# also, the multiple exits(0) really bother me.1
-
-	# look into an Options parser lib
+	# look into an Options parser lib?
 	if ARGV[0] == "--reset"
 		puts "Are you sure you want to clear the diary? (y/N)"
 		answer = STDIN.gets.chomp
@@ -74,9 +71,7 @@ elsif ARGV.count == 1
 		else
 			puts "Ok, NOT clearing the diary this time."
 		end
-		exit(0)
 	else
 		puts "I don't know what you want to do. Exiting."
-		exit(0)
 	end
 end
