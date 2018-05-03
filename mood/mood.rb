@@ -8,7 +8,6 @@ class Mood
 	attr_accessor :timestamp
 
 	def to_s
-		puts @timestamp
 		"On #{Date.parse(@timestamp).strftime('%m/%d/%Y')} at #{Time.parse(@timestamp).strftime('%I:%M%p')}, my mood was '#{@mood}' because '#{@reason.chomp}'"
 	end
 end
