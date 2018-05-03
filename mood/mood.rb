@@ -27,7 +27,7 @@ def prompt(diary)
 	puts diary.get_scale
 	entry.mood = askForMood
 	entry.reason = askForReason
-	entry.timestamp = Time.now.to_s
+	entry.timestamp = Time.now
 	entry
 end
 
