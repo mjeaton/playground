@@ -1,11 +1,34 @@
+require 'date'
 class Diary
-	def SaveEntry(entry, delimiter="=")
+	attr_accessor :Entries
+
+	FILENAME = "moodDiary.txt".freeze
+	private_constant = :FILENAME
+
+	def initialize
+		@Entries = []
+		# check to see if the file exists
+		if File.file? FILENAME
+			# load the entries from the file
+			File.foreach(FILENAME) do |l|
+				# parse each line since it's tab-delimited
+
+				# this could all be cleaner!
+				ts, m, r = l.split(/\t/)
+				entry = Mood.new
+				entry.Timestamp = ts
+				entry.Mood = m
+				entry.Reason = r
+
+				@Entries.push(entry)
+			end
+		end
+	end
+
+	def SaveEntry(entry)
 		begin
-			diary = File.open("moodDiary.txt", "a") 
-			diary.puts delimiter * 10
-			diary.puts entry.Timestamp 
-			diary.puts entry.Mood 
-			diary.puts entry.Reason 
+			diary = File.open(FILENAME, "a") 
+			diary.puts "#{entry.Timestamp}\t#{entry.Mood}\t#{entry.Reason}"
 		rescue IOError => e
 			puts e
 		ensure
@@ -15,7 +38,7 @@ class Diary
 
 	def Clear
 		begin
-			diary = File.open("moodDiary.txt", "w") 
+			diary = File.open(FILENAME, "w") 
 		rescue IOError => e
 			puts e
 		ensure
@@ -33,6 +56,10 @@ class Mood
 	attr_accessor :Mood
 	attr_accessor :Reason
 	attr_accessor :Timestamp
+
+	def to_s
+		"#{@Timestamp}, my mood was #{@Mood} because '#{@Reason.chomp}'"
+	end
 end
 
 def askForMood
@@ -61,7 +88,12 @@ if ARGV.count == 0
 	puts "Saved."
 elsif ARGV.count == 1
 	# look into an Options parser lib?
-	if ARGV[0] == "--reset"
+	if ARGV[0] == "--list"
+		diary.Entries.each { |e| puts e.to_s}
+
+		puts "-" * 10
+		puts "Entries: #{diary.Entries.count}"
+	elsif ARGV[0] == "--reset"
 		puts "Are you sure you want to clear the diary? (y/N)"
 		answer = STDIN.gets.chomp
 
