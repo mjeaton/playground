@@ -15,9 +15,9 @@ class Diary
 				# this could all be cleaner!
 				ts, m, r = l.split(/\t/)
 				entry = Mood.new
-				entry.Timestamp = ts
-				entry.Mood = m
-				entry.Reason = r
+				entry.timestamp = ts
+				entry.mood = m
+				entry.reason = r
 
 				@Entries.push(entry)
 			end
@@ -27,7 +27,7 @@ class Diary
 	def SaveEntry(entry)
 		begin
 			diary = File.open(FILENAME, "a") 
-			diary.puts "#{entry.Timestamp}\t#{entry.Mood}\t#{entry.Reason}"
+			diary.puts "#{entry.timestamp}\t#{entry.mood}\t#{entry.reason}"
 		rescue IOError => e
 			puts e
 		ensure
@@ -52,12 +52,12 @@ class Diary
 end
 
 class Mood
-	attr_accessor :Mood
-	attr_accessor :Reason
-	attr_accessor :Timestamp
+	attr_accessor :mood
+	attr_accessor :reason
+	attr_accessor :timestamp
 
 	def to_s
-		"#{@Timestamp}, my mood was #{@Mood} because '#{@Reason.chomp}'"
+		"#{@timestamp}, my mood was #{@mood} because '#{@reason.chomp}'"
 	end
 end
 
@@ -74,9 +74,9 @@ end
 def prompt(diary)
 	entry = Mood.new
 	puts diary.GetMoodScale 
-	entry.Mood = askForMood
-	entry.Reason = askForReason
-	entry.Timestamp = Time.now
+	entry.mood = askForMood
+	entry.reason = askForReason
+	entry.timestamp = Time.now
 	entry
 end
 
