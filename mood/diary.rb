@@ -56,9 +56,10 @@ class Diary
 
 			# this could all be cleaner!
 			ts, m, r = l.split(/\t/)
+
 			entry = Mood.new
 			entry.timestamp = ts
-			entry.mood = m
+			entry.mood = @moods[m.to_i]
 			entry.reason = r
 
 			results.push(entry)
