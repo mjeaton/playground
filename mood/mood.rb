@@ -19,9 +19,10 @@ end
 
 def ask_for_reason 
 	puts "Why? (shift-enter for multiple lines. 'END' <enter> to save."
+	gets.chomp
 
-	$/ = "END"
-	STDIN.gets
+	#$/ = "END"
+	#STDIN.gets
 end
 
 def prompt_and_get_entry(diary)
