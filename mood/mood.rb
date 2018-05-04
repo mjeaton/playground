@@ -40,6 +40,19 @@ def print_entries(diary)
 	end
 end
 
+def print_help
+	puts "My Mood Diary"
+	puts ""
+	puts "Usage: [--help] [--reset] [--list]"
+	puts ""
+	puts "Used with no arguments, you will be prompted for your mood and a reason for the current mood."
+	puts ""
+	puts "--list will display a list of all entries."
+	puts "--reset will clear the contents of the current mood diary."
+	puts "--help displays this help text."
+	puts ""
+end
+
 diary = Diary.new
 
 # No args = prompt
@@ -53,6 +66,8 @@ elsif ARGV.count == 1
 	# look into an Options parser lib?
 	if ARGV[0] == "--list"
 		print_entries(diary)
+	elsif ARGV[0] == "--help"
+		print_help
 	elsif ARGV[0] == "--reset"
 		puts "Are you sure you want to clear the diary? (y/N)"
 		answer = STDIN.gets.chomp
