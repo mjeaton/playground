@@ -12,23 +12,32 @@ class Mood
 	end
 end
 
-def askForMood
+def ask_for_mood
 	puts "What's your mood right now?"
 	gets.chomp.to_i
 end
 
-def askForReason
+def ask_for_reason 
 	puts "Why?"
 	gets.chomp
 end
 
-def prompt(diary)
+def prompt_and_get_entry(diary)
 	entry = Mood.new
 	puts diary.get_scale
-	entry.mood = askForMood
-	entry.reason = askForReason
+	entry.mood = ask_for_mood
+	entry.reason = ask_for_reason
 	entry.timestamp = Time.now
 	entry
+end
+
+def print_entries(diary)
+	diary.entries.each { |e| puts e.to_s}
+
+	if diary.entries.count > 0
+		puts "-" * 10
+		puts "Entries: #{diary.entries.count}"
+	end
 end
 
 diary = Diary.new
@@ -38,17 +47,12 @@ diary = Diary.new
 # --list = lists all the entries in the file
 
 if ARGV.count == 0
-	diary.SaveEntry(prompt(diary))
+	diary.SaveEntry(prompt_and_get_entry(diary))
 	puts "Saved."
 elsif ARGV.count == 1
 	# look into an Options parser lib?
 	if ARGV[0] == "--list"
-		diary.entries.each { |e| puts e.to_s}
-
-		if diary.entries.count > 0
-			puts "-" * 10
-			puts "Entries: #{diary.entries.count}"
-		end
+		print_entries(diary)
 	elsif ARGV[0] == "--reset"
 		puts "Are you sure you want to clear the diary? (y/N)"
 		answer = STDIN.gets.chomp
